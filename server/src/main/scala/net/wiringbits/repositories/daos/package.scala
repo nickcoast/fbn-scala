@@ -11,8 +11,7 @@ import net.wiringbits.repositories.models.{
   UserToken,
   UserTokenType,
   Baby,
-  Era,
-}
+  Era,}
 
 package object daos {
 
