@@ -1,7 +1,7 @@
 package net.wiringbits.repositories
 
 import anorm._
-import net.wiringbits.common.models.{Email, Name}
+import net.wiringbits.common.models.{Email, Name, BabyName, EraName}
 import net.wiringbits.repositories.models.{
   NotificationStatus,
   NotificationType,
@@ -9,7 +9,9 @@ import net.wiringbits.repositories.models.{
   UserLog,
   UserNotification,
   UserToken,
-  UserTokenType
+  UserTokenType,
+  Baby,
+  Era,
 }
 
 package object daos {
@@ -33,15 +35,36 @@ package object daos {
 
   implicit val nameParser: Column[Name] = Column.columnToString.map(Name.trusted)
   implicit val emailParser: Column[Email] = citextToString.map(Email.trusted)
+  implicit val babyNameParser: Column[BabyName] = Column.columnToString.map(BabyName.trusted)
+  implicit val eraNameParser: Column[EraName] = Column.columnToString.map(EraName.trusted)
 
   val userParser: RowParser[User] = {
     Macro.parser[User](
       "user_id",
       "name",
-      "email",
+      "email", // no last_name??
       "password",
       "created_at",
       "verified_on"
+    )
+  }
+  val eraParser: RowParser[Era] = {
+    Macro.parser[Era](
+      "id",
+      "era_name",
+      "story",
+      "start_date",
+      "end_date",
+      "created_at",
+    )
+  }
+  val babyParser: RowParser[Baby] = {
+    Macro.parser[Baby] (
+      "id",
+      "baby_name",
+      "baby_date",
+      "baby_era_id",
+      "created_at"
     )
   }
 

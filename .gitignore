@@ -1,6 +1,8 @@
 target/
 .idea/
 .bsp/
+.envrc
+*.iml
 .vscode/
 .metals/**
 logs/
