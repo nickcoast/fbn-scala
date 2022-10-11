@@ -5,6 +5,7 @@ import net.wiringbits.repositories.models.Baby
 
 import java.sql.Connection
 import java.util.UUID
+import java.time.Instant
 
 object BabyDAO {
 
@@ -46,15 +47,15 @@ object BabyDAO {
         """.as(babyParser.singleOpt)
   }
 
-  def updateName(id: Int, name: BabyName)(implicit conn: Connection): Unit = {
+  def updateName(babyName: BabyName, name: BabyName)(implicit conn: Connection): Unit = {
     val _ = SQL"""
       UPDATE baby_names
       SET baby_name = ${name.string}
-      WHERE id = $id
+      WHERE baby_name LIKE ${babyName.string}
     """.execute()
   }
 
-  def findBabyForUpdate(id: UUID)(implicit conn: Connection): Option[Baby] = {
+  def findBabyForUpdate(id: Int)(implicit conn: Connection): Option[Baby] = {
     SQL"""
         SELECT id, baby_name, baby_date, baby_era_id, created_at
         FROM baby_names

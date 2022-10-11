@@ -3,7 +3,7 @@
 
 
 -- Babynames
-CREATE TABLE baby_names(
+CREATE TABLE IF NOT EXISTS baby_names(
     id SERIAL PRIMARY KEY,
     baby_name VARCHAR(100) NOT NULL,
     baby_date TIMESTAMPTZ NOT NULL,
@@ -17,7 +17,7 @@ CREATE INDEX baby_era_id_index ON baby_names USING BTREE (baby_era_id);
 
 
 -- baby eras
-CREATE TABLE eras (
+CREATE TABLE IF NOT EXISTS eras (
     id SERIAL PRIMARY KEY,
     era_name VARCHAR(100) NOT NULL,
     story TEXT NULL DEFAULT NULL,
@@ -31,14 +31,14 @@ CREATE INDEX era_name_index ON eras USING BTREE (era_name);
 CREATE INDEX era_start_date_index ON eras USING BTREE (start_date);
 CREATE INDEX era_end_date_index ON eras USING BTREE (end_date);
 
-CREATE TABLE parent_names (
+CREATE TABLE IF NOT EXISTS parent_names (
     id SERIAL PRIMARY KEY,
     parent_name VARCHAR(63) NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     CONSTRAINT parent_names_unique UNIQUE (parent_name)
 );
 
-CREATE TABLE parent_fact_categories (
+CREATE TABLE IF NOT EXISTS parent_fact_categories (
     id SERIAL PRIMARY KEY, -- use this id as well as user-inputted value to help get babyname
     category_name VARCHAR(63) NOT NULL,
     category_desc VARCHAR(63) NULL DEFAULT NULL,
@@ -56,7 +56,7 @@ VALUES ('Favorite Color',DEFAULT),
        ('Apples or Oranges?',DEFAULT);
 
 -- store results of parents' babyname search. Probably won't use this for first implementation
-CREATE TABLE baby_parents (
+CREATE TABLE IF NOT EXISTS baby_parents (
     id SERIAL PRIMARY KEY ,
     parent_name_id_1 INT NOT NULL, -- lower id parent name
     parent_name_id_2 INT NOT NULL, -- higher id parent name
@@ -73,7 +73,7 @@ CREATE UNIQUE INDEX baby_parents_unique ON baby_parents (parent_name_id_1,parent
 
 
 -- baby queries log. won't use in first implementation.
-CREATE TABLE baby_log (
+CREATE TABLE IF NOT EXISTS baby_log (
     baby_log_id SERIAL PRIMARY KEY,
     baby_parents_id INT NOT NULL,
     baby_name_id INT NOT NULL,

@@ -5,7 +5,9 @@ import net.wiringbits.repositories.{
   UserLogsRepository,
   UserNotificationsRepository,
   UserTokensRepository,
-  UsersRepository
+  UsersRepository,
+  BabiesRepository,
+  ErasRepository
 }
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.concurrent.ScalaFutures._
@@ -22,13 +24,17 @@ trait RepositorySpec extends AnyWordSpec with PostgresSpec {
     val userTokens = new UserTokensRepository(db)(Executors.databaseEC)
     val userNotifications = new UserNotificationsRepository(db)(Executors.databaseEC, clock)
     val userLogs = new UserLogsRepository(db)(Executors.databaseEC)
+    val babies = new BabiesRepository(db,UserTokensConfig(1.hour, 1.hour, "secret"))(Executors.databaseEC, clock)
+    val eras = new ErasRepository(db,UserTokensConfig(1.hour, 1.hour, "secret"))(Executors.databaseEC, clock)
     val components =
       RepositoryComponents(
         db,
         users,
         userTokens,
         userNotifications,
-        userLogs
+        userLogs,
+        babies,
+        eras,
       )
     runTest(components)
   }

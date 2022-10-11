@@ -11,6 +11,8 @@ import scala.util.{Failure, Success, Try}
 
 trait ApiClient {
   def createUser(request: CreateUser.Request): Future[CreateUser.Response]
+  def createBaby(request: CreateBaby.Request): Future[CreateBaby.Response]
+  def updateBaby(request: UpdateBaby.Request): Future[UpdateBaby.Response]
   def login(request: Login.Request): Future[Login.Response]
   def logout(): Future[Logout.Response]
 
@@ -105,6 +107,30 @@ object ApiClient {
 
       prepareRequest[CreateUser.Response]
         .post(uri)
+        .body(Json.toJson(request).toString())
+        .send(backend)
+        .map(_.body)
+        .flatMap(Future.fromTry)
+    }
+
+    override def createBaby(request: CreateBaby.Request): Future[CreateBaby.Response] = {
+      val path = ServerAPI.path :+ "babies"
+      val uri = ServerAPI.withPath(path)
+
+      prepareRequest[CreateBaby.Response]
+        .post(uri)
+        .body(Json.toJson(request).toString())
+        .send(backend)
+        .map(_.body)
+        .flatMap(Future.fromTry)
+    }
+
+    override def updateBaby(request: UpdateBaby.Request): Future[UpdateBaby.Response] = {
+      val path = ServerAPI.path :+ "babies" :+ "baby"
+      val uri = ServerAPI.withPath(path)
+
+      prepareRequest[UpdateBaby.Response]
+        .put(uri)
         .body(Json.toJson(request).toString())
         .send(backend)
         .map(_.body)

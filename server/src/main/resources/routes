@@ -44,5 +44,10 @@ GET /environment-config controllers.EnvironmentConfigController.getEnvironmentCo
 # static assets for swagger-ui
 GET /docs/*file        controllers.Assets.at(path="/swagger-ui", file)
 
+# create new baby (public)
+POST /babies controllers.BabiesController.create()
+# update the current baby details
+PUT /babies/baby controllers.BabiesController.update()
+
 # routes for admin tables (GET, POST, PUT and DELETE)
 -> / net.wiringbits.webapp.utils.admin.AppRouter

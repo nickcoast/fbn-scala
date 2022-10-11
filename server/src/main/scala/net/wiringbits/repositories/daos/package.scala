@@ -34,8 +34,8 @@ package object daos {
 
   implicit val nameParser: Column[Name] = Column.columnToString.map(Name.trusted)
   implicit val emailParser: Column[Email] = citextToString.map(Email.trusted)
- /* implicit val babyNameParser: Column[BabyName] = Column.columnToString.map(BabyName.trusted)
-  implicit val eraNameParser: Column[EraName] = Column.columnToString.map(EraName.trusted)*/
+  implicit val babyNameParser: Column[BabyName] = Column.columnToString.map(BabyName.trusted)
+  implicit val eraNameParser: Column[EraName] = Column.columnToString.map(EraName.trusted)
 
   val userParser: RowParser[User] = {
     Macro.parser[User](

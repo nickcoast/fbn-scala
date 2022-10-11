@@ -43,9 +43,9 @@ class BabiesRepository @Inject()(
     }
   }
 
-  def update(id: Int, babyName: BabyName): Future[Unit] = Future {
+  def update(babyName: BabyName, newBabyName: BabyName): Future[Unit] = Future {
     database.withTransaction { implicit conn =>
-      BabyDAO.updateName(id, babyName)
+      BabyDAO.updateName(babyName, newBabyName)
     }
   }
 }
