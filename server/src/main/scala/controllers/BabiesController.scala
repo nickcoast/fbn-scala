@@ -29,6 +29,7 @@ import scala.concurrent.ExecutionContext
 class BabiesController @Inject()(
     createBabyAction: CreateBabyAction,
     updateBabyAction: UpdateBabyAction,
+    getBabyAction: GetBabyAction
 )(implicit cc: ControllerComponents, ec: ExecutionContext)
     extends AbstractController(cc) {
   //private val logger = LoggerFactory.getLogger(this.getClass)
@@ -95,4 +96,17 @@ class BabiesController @Inject()(
       response = UpdateBaby.Response()
     } yield Ok(Json.toJson(response))
   }
+  def get() = handleJsonBody[GetBaby.Request] { request =>
+    val body = request.body
+    for {
+      response <- getBabyAction(body.parent1Name, body.parent2Name)
+    } yield Ok(Json.toJson(response))
+
+  }
+  /*def get() = handleJsonBody[GetBaby.Request] { request =>
+    val body = request.body
+    val response = getBabyAction(body.parent1Name, body.parent2Name)
+    Ok(Json.toJson(response))
+
+  }*/
 }

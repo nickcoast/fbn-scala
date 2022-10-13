@@ -4,7 +4,6 @@ import net.wiringbits.common.models.BabyName
 import net.wiringbits.repositories.BabiesRepository
 
 import scala.concurrent.{ExecutionContext, Future}
-import java.time.Instant
 
 object ValidateBabyNameIsAvailable {
   def apply(repository: BabiesRepository, name: BabyName)(implicit ec: ExecutionContext): Future[Unit] = {

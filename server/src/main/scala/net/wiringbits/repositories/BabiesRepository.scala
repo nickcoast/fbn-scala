@@ -1,6 +1,6 @@
 package net.wiringbits.repositories
 
-import net.wiringbits.common.models.{BabyName}
+import net.wiringbits.common.models.{BabyName, Name}
 import net.wiringbits.config.UserTokensConfig
 import net.wiringbits.executors.DatabaseExecutionContext
 import net.wiringbits.repositories.daos.{BabyDAO}
@@ -48,4 +48,10 @@ class BabiesRepository @Inject()(
       BabyDAO.updateName(babyName, newBabyName)
     }
   }
+
+  def getBaby(parent1Name: Name, parent2Name: Name = Name.trusted("")): Future[Option[Baby]] = Future { // future baby, amazing
+        database.withConnection { implicit conn =>
+          BabyDAO.get(parent1Name, parent2Name)
+        }
+    }
 }

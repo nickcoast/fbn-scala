@@ -1,6 +1,6 @@
 package net.wiringbits.repositories.models
 
-import net.wiringbits.common.models.{BabyName}
+import net.wiringbits.common.models.{BabyName, Name}
 
 import java.time.Instant
 

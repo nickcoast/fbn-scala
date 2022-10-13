@@ -1,6 +1,6 @@
 package net.wiringbits.repositories
 
-import net.wiringbits.common.models.{BabyName, Email}
+import net.wiringbits.common.models.{BabyName, Name, Email}
 import net.wiringbits.core.RepositorySpec
 import net.wiringbits.repositories.models.Baby
 import net.wiringbits.util.EmailMessage
@@ -25,9 +25,6 @@ class BabiesRepositorySpec extends RepositorySpec {
     "work" in withRepositories() { repositories =>
       val request = Baby.CreateBaby(
         name = BabyName.trusted("Brozo"),
-        //babyDate = Calendar.getInstance(TimeZone.getTimeZone("PST")).set(Calendar.MONTH, 0).set(Calendar.DATE, 30)
-        //babyDate = DateTimeFormat.forPattern("yyyy-MM-dd").parseDateTime("2027-04-20").toInstant
-        //babyDate = LocalDate.parse("2027-04-20",DateTimeFormatter.ofPattern("yyyy-MM-dd")).toInstant
         babyDate = LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant
       )      
       repositories.babies.create(request).futureValue
@@ -117,8 +114,68 @@ class BabiesRepositorySpec extends RepositorySpec {
       ex.getCause.getMessage must startWith(
         """ERROR: insert or update on table "baby_names" violates foreign key constraint "baby_logs_babies_fk""""
       )*/
-      val response = repositories.babies.update(name, newName).futureValue
-      response.isEmpty must be(true)
+      // does not need an assertion because any exception will now fail the test
+      repositories.babies.update(name, newName).futureValue
+    }
+  }
+
+  "get" should {
+    "get baby by parent names" in withRepositories() { repositories =>
+      val request = Baby.CreateBaby( // TODO: convert to set of tuples to call Baby.CreateBaby on?
+        name = BabyName.trusted("Brozo"),
+        babyDate = LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant //Instant.parse("2049-04-20T00:00:00.00Z")
+      )
+      val request2 = Baby.CreateBaby(
+        name = BabyName.trusted("Frowup"),
+        babyDate = Instant.parse("2069-11-19T00:00:00.00Z")
+      )
+      val request3 = Baby.CreateBaby(
+        name = BabyName.trusted("Timberley"),
+        babyDate = Instant.parse("2150-12-25T00:00:00.00Z")
+      )
+      repositories.babies.create(request).futureValue
+      repositories.babies.create(request2).futureValue
+      repositories.babies.create(request3).futureValue
+
+      val parent1Name = Name.trusted("Timothy Dalton")
+      val parent2Name = Name.trusted("Christopher Reeve")
+      // sum of lowercase chars ex spaces = 3154
+      // 3154 % 3 = 1, so SECOND name should be returned
+      val response = repositories.babies.getBaby(parent1Name, parent2Name).futureValue
+      response.value.name must be(request3.name)
+      //response.value.date must be(request.babyDate) // TODO: try this
+
+      val parent3Name = Name.trusted("Timothy Daltol") // -2 by changing 'n' to 'l'
+      val parent4Name = Name.trusted("Christopher Reeve")
+      val response2 = repositories.babies.getBaby(parent3Name,parent4Name).futureValue
+      response2.value.name must be(request.name)
+      // TODO: check date also
+    }
+    "get baby by ONE parent name" in withRepositories() { repositories =>
+      val request = Baby.CreateBaby( // TODO: convert to set of tuples to call Baby.CreateBaby on?
+        name = BabyName.trusted("Brozo"),
+        babyDate = LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant //Instant.parse("2049-04-20T00:00:00.00Z")
+      )
+      val request2 = Baby.CreateBaby(
+        name = BabyName.trusted("Frowup"),
+        babyDate = Instant.parse("2069-11-19T00:00:00.00Z")
+      )
+      val request3 = Baby.CreateBaby(
+        name = BabyName.trusted("Timberley"),
+        babyDate = Instant.parse("2150-12-25T00:00:00.00Z")
+      )
+      repositories.babies.create(request).futureValue
+      repositories.babies.create(request2).futureValue
+      repositories.babies.create(request3).futureValue
+
+      val parent1Name = Name.trusted("Jammy Jellyfish") // char sum modulo 3 = 0
+      val response = repositories.babies.getBaby(parent1Name).futureValue
+      response.value.name must be(request3.name)
+
+      val parent2Name = Name.trusted("Jammy Jellyfisg") // char sum modulo 3 = 2
+      val response2 = repositories.babies.getBaby(parent2Name).futureValue
+      response2.value.name must be(request2.name)
+
     }
   }
 }
