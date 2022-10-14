@@ -9,6 +9,10 @@ class I18nMessages(_lang: I18nLang) {
 
   def appName = "Wiringbits Web App Template"
   def appNameCopyright = s"$appName ${java.time.ZonedDateTime.now.getYear}"
+
+  def babySubmit = "Get That Baby!"
+  def babyParent1 = "Parent 1 Name"
+  def babyParent2 = "Parent 2 Name"
   def description =
     "While wiringbits is a company based in Culiacan, Mexico, there is no office, everyone works remotely. We strive for great quality on the software we built, and try to open source everything we can."
   def profile = "Profile"

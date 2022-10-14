@@ -13,6 +13,7 @@ trait ApiClient {
   def createUser(request: CreateUser.Request): Future[CreateUser.Response]
   def createBaby(request: CreateBaby.Request): Future[CreateBaby.Response]
   def updateBaby(request: UpdateBaby.Request): Future[UpdateBaby.Response]
+  def getBaby(request: GetBaby.Request): Future[GetBaby.Response]
   def login(request: Login.Request): Future[Login.Response]
   def logout(): Future[Logout.Response]
 
@@ -130,6 +131,20 @@ object ApiClient {
       val uri = ServerAPI.withPath(path)
 
       prepareRequest[UpdateBaby.Response]
+        .put(uri)
+        .body(Json.toJson(request).toString())
+        .send(backend)
+        .map(_.body)
+        .flatMap(Future.fromTry)
+    }
+
+    override def getBaby(request: GetBaby.Request): Future[GetBaby.Response] = {
+      // TODO: look into why changing return type to wrong type e.g. Future[UpdateBaby.Response]
+      // leads to error in Future.fromTry
+      val path = ServerAPI.path :+ "babies" :+ "name"
+      val uri = ServerAPI.withPath(path)
+
+      prepareRequest[GetBaby.Response]
         .put(uri)
         .body(Json.toJson(request).toString())
         .send(backend)

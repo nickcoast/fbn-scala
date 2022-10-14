@@ -13,6 +13,7 @@ import com.alexitc.materialui.facade.materialUiStyles.withStylesMod.{
 }
 import net.wiringbits.AppContext
 import net.wiringbits.core.I18nHooks
+import net.wiringbits.components.widgets._
 import net.wiringbits.webapp.utils.slinkyUtils.components.core.widgets.Container.Alignment
 import net.wiringbits.webapp.utils.slinkyUtils.components.core.widgets._
 import org.scalablytyped.runtime.StringDictionary
@@ -163,6 +164,8 @@ import slinky.web.html._
       child = div(className := classes("homeContainer"))(
         Fragment(
           homeFragment,
+          //SignInForm(props.ctx),
+          GetBabyNameForm(props.ctx),
           userProfileFragment,
           adminPortalFragment,
           swaggerFragment,
