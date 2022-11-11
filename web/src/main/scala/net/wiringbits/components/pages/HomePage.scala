@@ -166,11 +166,11 @@ import slinky.web.html._
           homeFragment,
           //SignInForm(props.ctx),
           GetBabyNameForm(props.ctx),
-          userProfileFragment,
+          /*userProfileFragment,
           adminPortalFragment,
-          swaggerFragment,
+          swaggerFragment,*/
           dataLoadingFragment,
-          simpleArchitectureFragment
+          /*simpleArchitectureFragment*/
         )
       )
     )

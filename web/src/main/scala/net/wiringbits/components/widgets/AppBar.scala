@@ -68,7 +68,7 @@ import slinky.web.html._
       case AuthState.Authenticated(_) =>
         Fragment(
           NavLinkButton("/", texts.home, onButtonClick),
-          NavLinkButton("/dashboard", texts.dashboard, onButtonClick),
+          //NavLinkButton("/dashboard", texts.dashboard, onButtonClick),
           NavLinkButton("/about", texts.about, onButtonClick),
           NavLinkButton("/me", texts.profile, onButtonClick),
           NavLinkButton("/signout", texts.signOut, onButtonClick)

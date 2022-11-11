@@ -32,7 +32,7 @@ class DataExplorerModule extends AbstractModule {
       // to prevent garbage data, let's disable most columns
       nonEditableColumns = List("id", "created_at"),
       canBeDeleted = false
-    ),
+    )/*,
     TableSettings(
       tableName = "haha",
       primaryKeyField = "haha_id",
@@ -40,6 +40,6 @@ class DataExplorerModule extends AbstractModule {
       // to prevent garbage data, let's disable most columns
       nonEditableColumns = List("id", "created_at"),
       canBeDeleted = false
-    )
+    )*/
   )
 }
