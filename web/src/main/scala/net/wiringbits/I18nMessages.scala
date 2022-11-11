@@ -7,17 +7,19 @@ import net.wiringbits.models.UserMenuOption
 // TODO: conditionaly render messages when we support more than 1 language
 class I18nMessages(_lang: I18nLang) {
 
-  def appName = "Wiringbits Web App Template"
+  def appName = "Future Baby Names"
   def appNameCopyright = s"$appName ${java.time.ZonedDateTime.now.getYear}"
 
   def babySubmit = "Get That Baby!"
   def babyParent1 = "Parent 1 Name"
   def babyParent2 = "Parent 2 Name"
   def description =
-    "While wiringbits is a company based in Culiacan, Mexico, there is no office, everyone works remotely. We strive for great quality on the software we built, and try to open source everything we can."
+    "FutureBabyNames is your one-stop shop for all your baby-naming needs."
   def profile = "Profile"
   def home = "Home"
   def dashboard = "Dashboard"
+  def drunks = "Drunk Drivers Click Here!"
+  def whosBetter = "Who's Better? Kurt Russell or Leelee Sobieski?"
   def user = "User"
   def about = "About"
   def signOut = "Sign out"
@@ -67,13 +69,14 @@ class I18nMessages(_lang: I18nLang) {
   def goingToBeRedirected = "You're going to be redirected"
   def emailHasBeenSent = "An email has been sent to your email with a URL to verify your account."
   def emailNotReceived = "If you haven't received the email after a few minutes, please check your spam folder"
-  def verifyingEmail = "We're verifing your email"
+  def verifyingEmail = "We're verifying your email"
   def waitAMomentPlease = "Wait a moment, please"
   def completeTheCaptcha = "Complete the captcha"
-  def checkoutTheRepo = "Checkout the repository!"
+  def checkoutTheRepo = "Checkout the wiringbits repository!"
 
-  def homePageDescription =
-    "A reusable skeleton to build web applications in Scala/Scala.js, including user registration, login, admin portal, and deployments."
+  def wiringbitsWebAppTemplateDescription = "A reusable skeleton to build web applications in Scala/Scala.js, including user registration, login, admin portal, and deployments."
+  def homePageDescription = "Enter your name and your co-parent's name and find out what your Future Baby's name should be!"
+
   def userProfile = "User profile"
   def userProfileDescription = "All the necessary code to create accounts, change passwords, update profile is there, "
   def tryIt = "Try it."

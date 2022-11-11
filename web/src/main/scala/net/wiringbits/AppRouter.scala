@@ -38,6 +38,8 @@ import scala.util.{Failure, Success}
     val auth = ReactiveHooks.useDistinctValue(props.ctx.$auth)
     val home = route("/", props.ctx)(HomePage(props.ctx))
     val about = route("/about", props.ctx)(AboutPage(props.ctx))
+    val drunkDrivers = route("/drunk-drivers", props.ctx)(DrunkDrivers(props.ctx))
+    val whosBetter = route("/kurt-russell-vs-leelee-sobieski", props.ctx)(KurtRussellOrLeeleeSobieski(props.ctx))
     val signIn = route("/signin", props.ctx)(SignInPage(props.ctx))
     val signUp = route("/signup", props.ctx)(SignUpPage(props.ctx))
     val email = route("/verify-email", props.ctx)(VerifyEmailPage(props.ctx))
@@ -72,6 +74,8 @@ import scala.util.{Failure, Success}
         router.Switch(
           home,
           about,
+          drunkDrivers,
+          whosBetter,
           signIn,
           signUp,
           email,
@@ -83,7 +87,7 @@ import scala.util.{Failure, Success}
         )
 
       case AuthState.Authenticated(user) =>
-        router.Switch(home, me(user), dashboard(user), about, signOut, catchAllRoute)
+        router.Switch(home, me(user), dashboard(user), about, drunkDrivers, whosBetter, signOut, catchAllRoute)
     }
   }
 }

@@ -5,16 +5,12 @@ import com.alexitc.materialui.facade.materialUiCore.createMuiThemeMod.Theme
 import com.alexitc.materialui.facade.materialUiCore.{components => mui, materialUiCoreStrings => muiStrings}
 import com.alexitc.materialui.facade.materialUiStyles.makeStylesMod.StylesHook
 import com.alexitc.materialui.facade.materialUiStyles.mod.makeStyles
-import com.alexitc.materialui.facade.materialUiStyles.withStylesMod.{
-  CSSProperties,
-  StyleRulesCallback,
-  Styles,
-  WithStylesOptions
-}
+import com.alexitc.materialui.facade.materialUiStyles.withStylesMod.{CSSProperties, StyleRulesCallback, Styles, WithStylesOptions}
 import net.wiringbits.AppContext
 import net.wiringbits.core.I18nHooks
 import net.wiringbits.components.widgets._
 import net.wiringbits.webapp.utils.slinkyUtils.components.core.widgets.Container.Alignment
+import net.wiringbits.webapp.utils.slinkyUtils.components.core.widgets.Container.Alignment.center
 import net.wiringbits.webapp.utils.slinkyUtils.components.core.widgets._
 import org.scalablytyped.runtime.StringDictionary
 import slinky.core.FunctionalComponent
@@ -29,11 +25,16 @@ import slinky.web.html._
     val stylesCallback: StyleRulesCallback[Theme, Unit, String] = theme =>
       StringDictionary(
         "homeContainer" -> CSSProperties()
-          .setMaxWidth(1300)
+          .setMaxWidth(1200)
           .setWidth("100%"),
         "homeTitle" -> CSSProperties()
           .setTextAlign(TextAlignProperty.center)
           .setMargin("8px 0"),
+        "homeDescription" -> CSSProperties()
+          .setTextAlign(TextAlignProperty.center)
+          .setMaxWidth("1200px")
+          .setMarginLeft("auto")
+          .setMarginRight("auto"),
         "snippet" -> CSSProperties()
           .setMaxWidth(800)
           .setWidth("100%")
@@ -71,57 +72,11 @@ import slinky.web.html._
       img(src := srcImg, alt := altImg, className := classes(classImg))
 
     val homeFragment = Fragment(
-      mui
+      /*mui
         .Typography(texts.homePage, className := classes("homeTitle"))
         .variant(muiStrings.h4)
-        .color(muiStrings.inherit),
+        .color(muiStrings.inherit),*/
       paragraph(texts.homePageDescription),
-      br(),
-      br()
-    )
-
-    val userProfileFragment = Fragment(
-      title(texts.userProfile),
-      paragraph(
-        Fragment(
-          texts.userProfileDescription,
-          link(texts.tryIt.toLowerCase, "https://template-demo.wiringbits.net/signin")
-        )
-      ),
-      br(),
-      br()
-    )
-
-    val adminPortalFragment = Fragment(
-      title(texts.easilyExposeDataAdminPortal),
-      paragraph(
-        Fragment(
-          texts.easilyExposeDataAdminPortalDescriptionStart,
-          link(texts.reactAdmin, "https://marmelab.com/react-admin/"),
-          texts.easilyExposeDataAdminPortalDescriptionEnd.toLowerCase
-        )
-      ),
-      paragraph(texts.thisSnippet),
-      image("/img/home/admin-user-table-snippet.png", texts.adminUserTableSnippet, "snippet"),
-      paragraph(texts.rendersAUserList),
-      image("/img/home/admin-user-list.png", texts.adminUserList, "screenshot"),
-      paragraph(texts.allowsViewingUpdatingASingleUser),
-      image("/img/home/admin-user-view.png", texts.adminUserView, "screenshot"),
-      paragraph(
-        Fragment(
-          paragraph(
-            Fragment(
-              link(texts.tryIt, "https://template-demo-admin.wiringbits.net"),
-              " (user=",
-              strong("demo"),
-              ", password=",
-              strong("wiringbits"),
-              ")"
-            )
-          )
-        )
-      ),
-      br(),
       br()
     )
 

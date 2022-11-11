@@ -31,8 +31,8 @@ object Main {
       API(),
       $authState,
       $lang,
-      Email.trusted("hello@wiringbits.net"),
-      "+52 (999) 9999 999",
+      Email.trusted("nerkyberlyersker@hahajk.com"),
+      "(911) 911 9111",
       org.scalajs.macrotaskexecutor.MacrotaskExecutor
     )
     val app = ErrorBoundaryComponent(

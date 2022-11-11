@@ -13,9 +13,9 @@ import org.scalablytyped.runtime.StringDictionary
 import slinky.core.FunctionalComponent
 import slinky.core.annotations.react
 import slinky.core.facade.Fragment
-import slinky.web.html.{alt, className, img, p, src}
+import slinky.web.html._
 
-@react object AboutPage {
+@react object KurtRussellOrLeeleeSobieski {
   case class Props(ctx: AppContext)
 
   private lazy val useStyles: StylesHook[Styles[Theme, Unit, String]] = {
@@ -32,27 +32,15 @@ import slinky.web.html.{alt, className, img, p, src}
     val texts = I18nHooks.useMessages(props.ctx.$lang)
     val classes = useStyles(())
 
-    val wiringbitsImage =
-      img(src := "/img/wiringbits-logo.png", alt := "wiringbits logo", className := classes("image"))
-
-    val fbnDescriptionText = Fragment(
-      p("We are a raucous young band of crazy silly-fresh gumby gold miners, hoping to strike it rich mining the wealth of the internets!"),
-      p("Kindly make a donation of just $1000 or more and we will create a custom Future Baby Name just for you.")
+    val whosBetterText = Fragment(
+      p("Kurt Russell"),
     )
-
-    val repositoryLink = mui
-      .Link(texts.checkoutTheRepo)
-      .variant(typographyTypographyMod.Style.body2)
-      .color(muiStrings.inherit)
-      .href("https://github.com/wiringbits/scala-webapp-template")
-      .target("_blank")
-
     Container(
       flex = Some(1),
       alignItems = Alignment.center,
       margin = EdgeInsets.top(48),
       child = Fragment(
-        fbnDescriptionText,
+        whosBetterText,
         //wiringbitsImage,
         /*Container(
           margin = EdgeInsets.top(888),

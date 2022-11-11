@@ -76,13 +76,14 @@ import slinky.core.facade.Fragment
       flex = Some(1),
       child = Fragment(
         title("Projects"),
-        link("CollabUML", "https://collabuml.com"),
-        link("The Stakenet Block Explorer", "https://xsnexplorer.io/"),
-        link("The Stakenet Orderbook", "https://orderbook.stakenet.io/XSN_BTC"),
-        link("Pull Request Attention", "https://prattention.com"),
-        link("CazaDescuentos", "https://cazadescuentos.net"),
-        link("safer.chat", "https://safer.chat"),
-        link("Crypto Coin Alerts", "https://github.com/AlexITC/crypto-coin-alerts")
+        link("Kurt Russell", "https://en.wikipedia.org/wiki/Kurt_Russell"),
+      )
+    )
+    val specialThanks = Container(
+      flex = Some(1),
+      child = Fragment(
+        title("Special Thanks To"),
+        link("Kurt Russell", "https://en.wikipedia.org/wiki/Kurt_Russell"),
       )
     )
 
@@ -122,18 +123,18 @@ import slinky.core.facade.Fragment
         padding = Container.EdgeInsets.all(margin),
         flexDirection = Container.FlexDirection.row,
         child = Fragment(
-          Container(
+          /*Container(
             margin = Container.EdgeInsets.right(margin / 2),
             flex = Some(1),
             child = Fragment(appName, appDescription)
-          ),
+          ),*/
           Container(
             flex = Some(1),
             margin = Container.EdgeInsets.left(margin / 2),
             flexDirection = Container.FlexDirection.row,
             child = Fragment(
-              projects,
-              contact
+              specialThanks,
+              //contact
             )
           )
         )

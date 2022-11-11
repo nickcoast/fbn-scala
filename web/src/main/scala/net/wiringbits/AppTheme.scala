@@ -13,7 +13,8 @@ import com.alexitc.materialui.facade.materialUiCore.withStylesMod.CSSProperties
 import com.alexitc.materialui.facade.materialUiCore.{colorsMod => Colors}
 
 object AppTheme {
-  val primaryColor = Colors.teal.`500`
+  val primaryColor = Colors.grey.`500`
+
   val secondaryColor = Colors.amber
   val typography = TypographyOptions().setUseNextVariants(true)
   val borderRadius = 8

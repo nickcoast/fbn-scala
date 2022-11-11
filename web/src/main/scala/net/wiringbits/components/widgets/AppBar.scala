@@ -1,5 +1,6 @@
 package net.wiringbits.components.widgets
 
+import com.alexitc.materialui.facade.csstype.csstypeStrings
 import com.alexitc.materialui.facade.csstype.mod.{FlexDirectionProperty, TextAlignProperty}
 import com.alexitc.materialui.facade.materialUiCore.createMuiThemeMod.Theme
 import com.alexitc.materialui.facade.materialUiCore.mod.PropTypes.Color
@@ -7,12 +8,7 @@ import com.alexitc.materialui.facade.materialUiCore.{components => mui, material
 import com.alexitc.materialui.facade.materialUiIcons.{components => muiIcons}
 import com.alexitc.materialui.facade.materialUiStyles.makeStylesMod.StylesHook
 import com.alexitc.materialui.facade.materialUiStyles.mod.makeStyles
-import com.alexitc.materialui.facade.materialUiStyles.withStylesMod.{
-  CSSProperties,
-  StyleRulesCallback,
-  Styles,
-  WithStylesOptions
-}
+import com.alexitc.materialui.facade.materialUiStyles.withStylesMod.{CSSProperties, StyleRulesCallback, Styles, WithStylesOptions}
 import net.wiringbits.AppContext
 import net.wiringbits.core.{I18nHooks, ReactiveHooks}
 import net.wiringbits.models.AuthState
@@ -32,7 +28,10 @@ import slinky.web.html._
     val stylesCallback: StyleRulesCallback[Theme, Unit, String] = theme =>
       StringDictionary(
         "appbar" -> CSSProperties()
-          .setColor("#FFF"),
+          .setColor("#FFF")
+          .setMaxWidth("1200px")
+          .setMarginLeft("auto")
+          .setMarginRight("auto"),
         "toolbar" -> CSSProperties()
           .setDisplay("flex")
           .setAlignItems("center")
@@ -46,7 +45,13 @@ import slinky.web.html._
           .setDisplay("flex")
           .setFlexDirection(FlexDirectionProperty.column)
           .setColor("#222")
-          .setTextAlign(TextAlignProperty.right)
+          .setTextAlign(TextAlignProperty.right),
+        "image" -> CSSProperties()
+          .setMaxWidth(1200)
+          .setMaxHeight(142)
+          .setMarginLeft("auto")
+          .setMarginRight("auto")
+          .setDisplay("block")
       )
     makeStyles(stylesCallback, WithStylesOptions())
   }
@@ -64,12 +69,17 @@ import slinky.web.html._
       }
     }
 
+    val fbnTopImage =
+      img(src := "/img/FutureBabyNames.jpg", alt := "FutureBabyNames logo", className := classes("image"))
+
     val menu = auth match {
       case AuthState.Authenticated(_) =>
         Fragment(
           NavLinkButton("/", texts.home, onButtonClick),
           //NavLinkButton("/dashboard", texts.dashboard, onButtonClick),
           NavLinkButton("/about", texts.about, onButtonClick),
+          NavLinkButton("/drunk-drivers", texts.drunks, onButtonClick),
+          NavLinkButton("/kurt-russell-vs-leelee-sobieski", texts.whosBetter, onButtonClick),
           NavLinkButton("/me", texts.profile, onButtonClick),
           NavLinkButton("/signout", texts.signOut, onButtonClick)
         )
@@ -78,6 +88,8 @@ import slinky.web.html._
         Fragment(
           NavLinkButton("/", texts.home, onButtonClick),
           NavLinkButton("/about", texts.about, onButtonClick),
+          NavLinkButton("/drunk-drivers", texts.drunks, onButtonClick),
+          NavLinkButton("/kurt-russell-vs-leelee-sobieski", texts.whosBetter, onButtonClick),
           NavLinkButton("/signup", texts.signUp, onButtonClick),
           NavLinkButton("/signin", texts.signIn, onButtonClick)
         )
@@ -124,14 +136,17 @@ import slinky.web.html._
         .AppBar(className := classes("appbar"))
         .position(muiStrings.relative)(toolbar, drawer)
     } else {
+      Fragment(
+      div(fbnTopImage),
       mui
         .AppBar(className := classes("appbar"))
         .position(muiStrings.relative)(
           mui.Toolbar(className := classes("toolbar"))(
-            Title(texts.appName),
+            //Title(texts.appName),
             div(className := classes("menu"))(menu)
           )
         )
+      )
     }
   }
 }
