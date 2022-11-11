@@ -83,54 +83,13 @@ import org.scalajs.dom
 
     val (babyData, setBabyData) = Hooks.useState("")
     val (dialogOpened, setDialogOpened) = Hooks.useState(false)
-    /*@react object BabyNameDialog {
-      case class Props(ctx: AppContext)
-      val component: FunctionalComponent[Props] = FunctionalComponent[Props] { props =>
-        val (babyData, setBabyData) = Hooks.useState(
-          Container(
-            Dialog(true)
-          )
-        )
-      }
-    }*/
-
     def handleDialogClosed(): Unit = setDialogOpened(false)
-
-    val showBabyData = Container(
-      minWidth = Some("100%"),
-      margin = EdgeInsets.bottom(8),
-      child = Dialog(open = true)
-        .onClose(_ => handleDialogClosed()
-      )
-    )
-    /*@react class BabyNameDialog extends CoreComponent {
-      case class Props(ctx: AppContext)
-      case class State(babyName: String)
-
-      def initialState = State("")
-
-      def setBabyName(babyName: String): Unit = {
-        setState(State(babyName))
-      }
-
-      def render = {
-        div(
-          h1(state.babyName)
-        )
-      }
-    }*/
 
     def onDataChanged(f: GetBabyNameFormData => GetBabyNameFormData): Unit = {
       setFormData { current =>
         current.filling.copy(data = f(current.data))
       }
     }
-
-    /*val babyBox = Container(
-      child =
-        p("Your baby name will appear here")
-
-    )*/
 
     // Seee Using the DOM Library at https://www.scala-js.org/doc/tutorial/basic/index.html
     def appendBabyBox(targetNode: dom.Node, text: String): Unit = {
@@ -145,24 +104,11 @@ import org.scalajs.dom
     def closeBabyBox(): Unit = setBabyBoxOpened(false)
     def openBabyBox(): Unit = setBabyBoxOpened(true)
 
-    //var babyBox: WithAttrs[div.tag.type] = div(p("LOLOL"))
-    val babyBox = Container(
-      //<div style=""><p>"HAHAHAHA!"</p></div>
-      p("Hahaha!!!! Yeah! What??")
-    )
-
     def getBabyBox(babyName: String): WithAttrs[div.tag.type] = {
       /*.title("Getcher babyname here")*/
-
-      /*div(
-        Dialog(true)
-          .`aria-labelledby`("alert-baby-name-title")
-          .`aria-describedby`("alert-baby-name-description")
-        mui.DialogTitle
-      )
-      */
+      val open = babyBoxOpened
       div(
-      Dialog(true)
+      Dialog(open)
         .onClose(_ => closeBabyBox())
         (
           mui.DialogTitle("Welcome your future baby!"),
@@ -201,9 +147,6 @@ import org.scalajs.dom
         //.className("jimmy")
         //.args()
     }
-    /*def getBabyBox(targetNode: dom.Node, text: String): Unit = {
-
-    }*/
 
     def handleSubmit(e: SyntheticEvent[_, dom.Event]): Unit = {
       e.preventDefault()
@@ -224,11 +167,8 @@ import org.scalajs.dom
               appendBabyBox(document.body,res.babyName.string) // works appends div to end of page
               //babyBox = getBabyBox(res.babyName.string)
               setBabyData(res.babyName.string)
-              //babyBox.setBabyName(res.babyName.string)
-              //babyBox = getBabyBox(res.babyName.string)
-              //props.ctx.baby
+              setBabyBoxOpened(true)
               //dom.window.alert(res.babyName.string)
-              //props.ctx.loggedIn(User(res.name, res.email))
               //history.push("/dashboard") // redirects to the dashboard
 
             case Failure(ex) =>
@@ -264,21 +204,6 @@ import org.scalajs.dom
           )
         )
     )
-
-    /*def getBabyNameButton(text: String): ReactElement = {
-      // TODO: It would be ideal to match the error against a code than matching a text
-      text match {
-        case ErrorMessages.`emailNotVerified` =>
-          val email = formData.data.email.inputValue
-
-          mui
-            .Button(texts.resendEmail)
-            .variant(muiStrings.text)
-            .color(muiStrings.primary)
-            .onClick(_ => history.push(s"/resend-verify-email?email=${email}"))
-        case _ => Fragment()
-      }
-    }*/
 
     val error = formData.firstValidationError.map { errorMessage =>
       Container(
@@ -326,15 +251,8 @@ import org.scalajs.dom
             child = getBabyNameButton
           ),
           Container(
-            child = getBabyBox("Jerkel")
+            child = getBabyBox(babyData)
           )
-          /*Container(
-            child = Fragment(
-
-              Container(margin = EdgeInsets.left(8), child = texts.loading)
-            )
-          )*/
-
         )
       )
     )

@@ -168,9 +168,9 @@ import slinky.web.html._
           GetBabyNameForm(props.ctx),
           /*userProfileFragment,
           adminPortalFragment,
-          swaggerFragment,*/
+          swaggerFragment,
           dataLoadingFragment,
-          /*simpleArchitectureFragment*/
+          simpleArchitectureFragment*/
         )
       )
     )
