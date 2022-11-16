@@ -6,7 +6,8 @@ ThisBuild / organization := "net.wiringbits"
 
 val playJson = "2.9.2"
 val sttp = "3.6.2"
-val webappUtils = "0.5.14"
+//val webappUtils = "0.5.14"
+val webappUtils = "0.5.14+3-243f8e54+20221115-0617-SNAPSHOT"
 val swagger = "1.6.6"
 
 val consoleDisabledOptions = Seq("-Werror", "-Ywarn-unused", "-Ywarn-unused-import")

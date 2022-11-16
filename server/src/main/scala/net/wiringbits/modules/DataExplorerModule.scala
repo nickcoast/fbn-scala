@@ -20,6 +20,7 @@ class DataExplorerModule extends AbstractModule {
     TableSettings(
       tableName = "baby_names",
       primaryKeyField = "id",
+      primaryKeyDataType = "Int",
       //hiddenColumns = List("password", "email"),
       // to prevent garbage data, let's disable most columns
       nonEditableColumns = List("id", "baby_name", "created_at"),
@@ -28,18 +29,20 @@ class DataExplorerModule extends AbstractModule {
     TableSettings(
       tableName = "eras",
       primaryKeyField = "id",
+      primaryKeyDataType = "Int",
       //hiddenColumns = List("password", "email"),
       // to prevent garbage data, let's disable most columns
       nonEditableColumns = List("id", "created_at"),
       canBeDeleted = false
-    )/*,
+    ),
     TableSettings(
-      tableName = "haha",
-      primaryKeyField = "haha_id",
+      tableName = "parent_fact_categories",
+      primaryKeyField = "id",
+      primaryKeyDataType = "Int",
       //hiddenColumns = List("password", "email"),
       // to prevent garbage data, let's disable most columns
       nonEditableColumns = List("id", "created_at"),
       canBeDeleted = false
-    )*/
+    )
   )
 }
