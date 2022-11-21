@@ -3,6 +3,10 @@
 
 -- baby_names
 -- allow nulls for baby_date and add baby_history column
+
+-- add baby_history column. Using NOT NULL DEFAULT '' means that CSVs used for
+-- postgres COPY must have "" for empty values otherwise interpreted as NULL
+-- and rejected.
 ALTER TABLE baby_names ADD COLUMN baby_history VARCHAR(1000) NOT NULL DEFAULT '';
 CREATE INDEX IF NOT EXISTS baby_history_index ON baby_names USING BTREE (baby_history);
 

@@ -5,3 +5,28 @@ body,
     display: flex;
     flex-direction: column;
 }
+.logo-image {
+    background-image:url("/img/FutureBabyNames.jpg");
+    background-size:100% 100%;
+    max-width:1200px;
+    max-height:142px;
+    margin-left:auto;
+    margin-right:auto;
+    display:block;
+    /*border:1px solid #000;*/
+}
+@media(max-width: 860px){
+    .logo-image{
+        background-image:url("/img/FutureBabyNames_860.png");
+    }
+}
+@media(max-width: 600px){
+    .logo-image{
+        background-image:url("/img/FutureBabyNames_600.png");
+    }
+}
+@media(max-width: 400px){
+    .logo-image{
+        background-image:url("/img/FutureBabyNames_400.png");
+    }
+}

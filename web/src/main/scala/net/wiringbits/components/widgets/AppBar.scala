@@ -11,6 +11,8 @@ import com.alexitc.materialui.facade.materialUiStyles.mod.makeStyles
 import com.alexitc.materialui.facade.materialUiStyles.withStylesMod.{CSSProperties, StyleRulesCallback, Styles, WithStylesOptions}
 import net.wiringbits.AppContext
 import net.wiringbits.core.{I18nHooks, ReactiveHooks}
+import net.wiringbits.facades.react.components.image
+import net.wiringbits.facades.reactRouterDom.components.Link
 import net.wiringbits.models.AuthState
 import net.wiringbits.webapp.utils.slinkyUtils.components.core.widgets.Container.{Alignment, EdgeInsets}
 import net.wiringbits.webapp.utils.slinkyUtils.components.core.widgets.{Container, NavLinkButton, Subtitle, Title}
@@ -38,7 +40,8 @@ import slinky.web.html._
           .setJustifyContent("space-between"),
         "toolbar-mobile" -> CSSProperties()
           .setDisplay("flex")
-          .setAlignItems("center"),
+          .setAlignItems("center")
+          .setJustifyContent("flex-start"),
         "menu" -> CSSProperties()
           .setDisplay("flex"),
         "menu-mobile" -> CSSProperties()
@@ -46,9 +49,17 @@ import slinky.web.html._
           .setFlexDirection(FlexDirectionProperty.column)
           .setColor("#222")
           .setTextAlign(TextAlignProperty.right),
-        "image" -> CSSProperties()
+        "logo-image" -> CSSProperties()
+          //.setBackgroundImage(url := "/img/FutureBabyNames.jpg")
           .setMaxWidth(1200)
           .setMaxHeight(142)
+          .setMarginLeft("auto")
+          .setMarginRight("auto")
+          .setDisplay("block"),
+        "logo-image-mobile" -> CSSProperties()
+          //.setBackgroundImage(url := "/img/FutureBabyNames.jpg")
+          .setMaxWidth(768)
+          .setMaxHeight(100)
           .setMarginLeft("auto")
           .setMarginRight("auto")
           .setDisplay("block")
@@ -60,7 +71,8 @@ import slinky.web.html._
     val texts = I18nHooks.useMessages(props.ctx.$lang)
     val auth = ReactiveHooks.useDistinctValue(props.ctx.$auth)
     val classes = useStyles(())
-    val isMobileOrTablet = MediaQueryHooks.useIsMobileOrTablet()
+    val isTablet = MediaQueryHooks.useIsTablet()
+    val isMobile = MediaQueryHooks.useIsMobile()
     val (visibleDrawer, setVisibleDrawer) = Hooks.useState(false)
 
     def onButtonClick(): Unit = {
@@ -70,38 +82,50 @@ import slinky.web.html._
     }
 
     val fbnTopImage =
-      img(src := "/img/FutureBabyNames.jpg", alt := "FutureBabyNames logo", className := classes("image"))
+      //a(img(src := "/img/FutureBabyNames.jpg", alt := "FutureBabyNames logo", className := classes("logo-image")), href := "/")
+      mui.Link(img(src := "/img/FutureBabyNames.jpg", alt := "FutureBabyNames logo", className := classes("logo-image"))).href("/")
+    val fbnTopImageMobile =
+      img(src := "/img/FutureBabyNames_400.jpg", alt := "FutureBabyNames logo", className := classes("logo-image"))
+
+
+    val coreMenu = List(
+      NavLinkButton("/", texts.home, onButtonClick),
+      //NavLinkButton("/dashboard", texts.dashboard, onButtonClick),
+      NavLinkButton("/about", texts.about, onButtonClick),
+      NavLinkButton("/drunk-drivers", texts.drunks, onButtonClick),
+      NavLinkButton("/kurt-russell-vs-leelee-sobieski", texts.whosBetter, onButtonClick)
+    )
+
+    val inauthMenu = List(
+      NavLinkButton("/signup", texts.signUp, onButtonClick),
+      NavLinkButton("/signin", texts.signIn, onButtonClick)
+    )
+    val authMenu = List(
+      NavLinkButton("/me", texts.profile, onButtonClick),
+      NavLinkButton("/signout", texts.signOut, onButtonClick)
+    )
 
     val menu = auth match {
       case AuthState.Authenticated(_) =>
         Fragment(
-          NavLinkButton("/", texts.home, onButtonClick),
-          //NavLinkButton("/dashboard", texts.dashboard, onButtonClick),
-          NavLinkButton("/about", texts.about, onButtonClick),
-          NavLinkButton("/drunk-drivers", texts.drunks, onButtonClick),
-          NavLinkButton("/kurt-russell-vs-leelee-sobieski", texts.whosBetter, onButtonClick),
-          NavLinkButton("/me", texts.profile, onButtonClick),
-          NavLinkButton("/signout", texts.signOut, onButtonClick)
+          coreMenu,
+          authMenu
         )
 
       case AuthState.Unauthenticated =>
         Fragment(
-          NavLinkButton("/", texts.home, onButtonClick),
-          NavLinkButton("/about", texts.about, onButtonClick),
-          NavLinkButton("/drunk-drivers", texts.drunks, onButtonClick),
-          NavLinkButton("/kurt-russell-vs-leelee-sobieski", texts.whosBetter, onButtonClick),
-          NavLinkButton("/signup", texts.signUp, onButtonClick),
-          NavLinkButton("/signin", texts.signIn, onButtonClick)
+          coreMenu,
+          inauthMenu
         )
     }
 
-    if (isMobileOrTablet) {
+    if (isMobile || isTablet) {
       val drawerContent = Container(
         minWidth = Some("256px"),
         flex = Some(1),
         margin = EdgeInsets.bottom(32),
-        alignItems = Alignment.flexEnd,
-        justifyContent = Alignment.spaceBetween,
+        alignItems = Alignment.flexStart,
+        //justifyContent = Alignment.spaceBetween,
         child = Fragment(
           mui
             .AppBar(className := classes("appbar"))
@@ -131,10 +155,15 @@ import slinky.web.html._
           .onClick(_ => setVisibleDrawer(true)),
         Subtitle(texts.appName)
       )
+      //val mobileOrTabletImg = if(isTablet) "/img/FutureBabyNames_768.jpg" else "/img/FutureBabyNames_425.jpg"
+      val mobileOrTabletImg = if(isTablet) "/img/FutureBabyNames_768.jpg" else "/img/FutureBabyNames_425.jpg"
 
-      mui
-        .AppBar(className := classes("appbar"))
-        .position(muiStrings.relative)(toolbar, drawer)
+      Fragment(
+        div(mui.Link(img(src := mobileOrTabletImg, alt := "FutureBabyNames logo", className := classes("logo-image-mobile"))).href("/")),
+        mui
+          .AppBar(className := classes("appbar"))
+          .position(muiStrings.relative)(toolbar, drawer)
+      )
     } else {
       Fragment(
       div(fbnTopImage),
