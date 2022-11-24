@@ -1,9 +1,9 @@
 package net.wiringbits.repositories
 
-import net.wiringbits.common.models.{BabyName, Name}
+import net.wiringbits.common.models.{ParentName, Name}
 import net.wiringbits.config.UserTokensConfig
 import net.wiringbits.executors.DatabaseExecutionContext
-import net.wiringbits.repositories.daos.{BabyDAO}
+import net.wiringbits.repositories.daos.BabyDAO
 import net.wiringbits.repositories.models._
 import play.api.db.Database
 
@@ -31,7 +31,7 @@ class BabiesRepository @Inject()(
     }
   }
 
-  def find(babyName: BabyName): Future[Option[Baby]] = Future {
+  def find(babyName: Name): Future[Option[Baby]] = Future {
     database.withConnection { implicit conn =>
       BabyDAO.find(babyName)
     }
@@ -43,13 +43,13 @@ class BabiesRepository @Inject()(
     }
   }
 
-  def update(babyName: BabyName, newBabyName: BabyName): Future[Unit] = Future {
+  def update(babyName: Name, newBabyName: Name): Future[Unit] = Future {
     database.withTransaction { implicit conn =>
       BabyDAO.updateName(babyName, newBabyName)
     }
   }
 
-  def getBaby(parent1Name: Name, parent2Name: Name = Name.trusted("")): Future[Option[Baby]] = Future { // future baby, amazing
+  def getBaby(parent1Name: ParentName, parent2Name: ParentName = ParentName.trusted("")): Future[Option[Baby]] = Future { // future baby, amazing
         database.withConnection { implicit conn =>
           BabyDAO.get(parent1Name, parent2Name)
         }

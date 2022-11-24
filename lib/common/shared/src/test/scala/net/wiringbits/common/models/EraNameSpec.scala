@@ -20,13 +20,13 @@ class EraNameSpec extends AnyWordSpec {
   "validate" should {
     valid.foreach { input =>
       s"accept valid values: $input" in {
-        Name.validate(input).isValid must be(true)
+        EraName.validate(input).isValid must be(true)
       }
     }
 
     invalid.foreach { input =>
       s"reject invalid values: $input" in {
-        Name.validate(input).isValid must be(false)
+        EraName.validate(input).isValid must be(false)
       }
     }
   }

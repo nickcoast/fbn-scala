@@ -1,15 +1,15 @@
 package net.wiringbits.api.models
 
 import io.swagger.annotations.{ApiModel, ApiModelProperty}
-import net.wiringbits.common.models.BabyName
+import net.wiringbits.common.models.Name
 import play.api.libs.json.{Format, Json}
 
 object UpdateBaby {
 
   @ApiModel(value = "UpdateBabyRequest", description = "Request to update baby details")
   case class Request(
-    @ApiModelProperty(value = "The baby's name'", dataType = "String", example = "Brozo") name: BabyName,
-    @ApiModelProperty(value = "The baby's new name", dataType = "String", example = "Frowup") newName: BabyName,
+    @ApiModelProperty(value = "The baby's name'", dataType = "String", example = "Brozo") name: Name,
+    @ApiModelProperty(value = "The baby's new name", dataType = "String", example = "Frowup") newName: Name,
   )
 
   @ApiModel(value = "UpdateBabyResponse", description = "Response after updating the baby details")

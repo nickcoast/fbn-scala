@@ -29,7 +29,7 @@ import net.wiringbits.common.ErrorMessages
 import net.wiringbits.core.I18nHooks
 import net.wiringbits.forms.GetBabyNameFormData
 import net.wiringbits.models.User
-import net.wiringbits.ui.components.inputs.NameInput
+import net.wiringbits.ui.components.inputs.ParentNameInput
 import net.wiringbits.webapp.utils.slinkyUtils.components.core.ErrorLabel
 import net.wiringbits.webapp.utils.slinkyUtils.components.core.widgets.Container.{Alignment, EdgeInsets}
 import net.wiringbits.webapp.utils.slinkyUtils.components.core.widgets.{CircularLoader, Container}
@@ -182,9 +182,9 @@ import org.scalajs.dom
     val parent1Input = Container(
       minWidth = Some("100%"),
       margin = EdgeInsets.bottom(8),
-      child = NameInput
+      child = ParentNameInput
         .component(
-          NameInput.Props(
+          ParentNameInput.Props(
             formData.data.parent1_name,
             disabled = formData.isInputDisabled,
             onChange = value => onDataChanged(x => x.copy(parent1_name = x.parent1_name.updated(value)))
@@ -195,10 +195,11 @@ import org.scalajs.dom
     val parent2Input = Container(
       minWidth = Some("100%"),
       margin = EdgeInsets.bottom(16),
-      child = NameInput
+      child = ParentNameInput
         .component(
-          NameInput.Props(
+          ParentNameInput.Props(
             formData.data.parent2_name,
+            //required = /*props.field.required*/,
             disabled = formData.isInputDisabled,
             onChange = value => onDataChanged(x => x.copy(parent2_name = x.parent2_name.updated(value)))
           )

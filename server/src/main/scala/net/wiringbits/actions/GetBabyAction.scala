@@ -1,7 +1,7 @@
 package net.wiringbits.actions
 
 import net.wiringbits.api.models.GetBaby
-import net.wiringbits.common.models.{BabyName, Name}
+import net.wiringbits.common.models.{ParentName, Name}
 import net.wiringbits.repositories.BabiesRepository
 import net.wiringbits.repositories.models.Baby
 
@@ -11,26 +11,8 @@ import scala.concurrent.{ExecutionContext, Future}
 class GetBabyAction @Inject()(
     babiesRepository: BabiesRepository
 )(implicit ec: ExecutionContext) {
-
-  /*def apply(parent1Name: Name, parent2Name: Name): Future[Baby] = {
-    val validate = Future {
-      if (parent1Name.string.isEmpty) new RuntimeException(s"The first parent name is required")
-      else ()
-    }
-
+  def apply(parent1Name: ParentName, parent2Name: ParentName): Future[GetBaby.Response] = {
     for {
-      _ <- validate
-      baby <- babiesRepository.getBaby(parent1Name, parent2Name)
-    } yield baby
-  }*/
-  def apply(parent1Name: Name, parent2Name: Name): Future[GetBaby.Response] = {
-//    val validate = Future {
-//      if (parent1Name.string.isEmpty) new RuntimeException(s"The first parent name is required")
-//      else ()
-//    }
-
-    for {
-//      _ <- validate
       baby <- unsafeBaby(parent1Name, parent2Name) // made a baby
     } yield GetBaby.Response(
       babyName = baby.name, // assign baby properties to response
@@ -38,7 +20,7 @@ class GetBabyAction @Inject()(
     )
   }
 
-  private def unsafeBaby(parent1Name: Name, parent2Name: Name): Future[Baby] = {
+  private def unsafeBaby(parent1Name: ParentName, parent2Name: ParentName): Future[Baby] = {
     babiesRepository
       .getBaby(parent1Name, parent2Name)
       .map { maybe =>

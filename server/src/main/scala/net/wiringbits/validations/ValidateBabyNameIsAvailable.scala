@@ -1,12 +1,12 @@
 package net.wiringbits.validations
 
-import net.wiringbits.common.models.BabyName
+import net.wiringbits.common.models.Name
 import net.wiringbits.repositories.BabiesRepository
 
 import scala.concurrent.{ExecutionContext, Future}
 
 object ValidateBabyNameIsAvailable {
-  def apply(repository: BabiesRepository, name: BabyName)(implicit ec: ExecutionContext): Future[Unit] = {
+  def apply(repository: BabiesRepository, name: Name)(implicit ec: ExecutionContext): Future[Unit] = {
     for {
       maybe <- repository.find(name)
     } yield {

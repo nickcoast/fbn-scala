@@ -1,7 +1,7 @@
 package net.wiringbits.repositories.daos
 
 import anorm.SqlParser.scalar
-import net.wiringbits.common.models.{BabyName, Name}
+import net.wiringbits.common.models.{ParentName, Name}
 import net.wiringbits.repositories.models.Baby
 
 import java.sql.Connection
@@ -32,7 +32,7 @@ object BabyDAO {
         """.as(babyParser.*)
   }
 
-  def find(babyName: BabyName)(implicit conn: Connection): Option[Baby] = {
+  def find(babyName: Name)(implicit conn: Connection): Option[Baby] = {
     SQL"""
         SELECT id, baby_name, baby_date, baby_era_id, created_at
         FROM baby_names
@@ -48,7 +48,7 @@ object BabyDAO {
         """.as(babyParser.singleOpt)
   }
 
-  def updateName(babyName: BabyName, name: BabyName)(implicit conn: Connection): Unit = {
+  def updateName(babyName: Name, name: Name)(implicit conn: Connection): Unit = {
     val _ = SQL"""
       UPDATE baby_names
       SET baby_name = ${name.string}
@@ -65,7 +65,7 @@ object BabyDAO {
         """.as(babyParser.singleOpt)
   }
 
-  def get(parent1Name: Name, parent2Name: Name)(implicit conn: Connection): Option[Baby] = {
+  def get(parent1Name: ParentName, parent2Name: ParentName)(implicit conn: Connection): Option[Baby] = {
     val total = Seq((parent1Name.toString() + parent2Name.toString()).replaceAll("\\n","")).flatMap(_.toLowerCase()).map(_.toInt).sum
     val limit = total % getBabyCount()
     SQL"""

@@ -12,9 +12,9 @@ class NameSpec extends AnyWordSpec {
   )
 
   val invalid = List(
-    ".",
+    //".",
     "",
-    "a"
+    //"a"
   )
 
   "validate" should {

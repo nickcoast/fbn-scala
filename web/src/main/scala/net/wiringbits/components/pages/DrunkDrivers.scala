@@ -24,6 +24,7 @@ import slinky.web.html._
         "drunkImage" -> CSSProperties()
           .setMaxWidth(1000)
           .setMaxHeight(752)
+          .setWidth("100%")
       )
     makeStyles(stylesCallback, WithStylesOptions())
   }
